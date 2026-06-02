@@ -13,6 +13,10 @@ const {notFound}          = require('./api/middlewares/notFound.middleware');
 
 const app = express();
 
+// Render and other hosted platforms terminate TLS/proxy requests before they
+// reach Express. This lets express-rate-limit read the real client IP safely.
+app.set('trust proxy', 1);
+
 // ── Security ─────────────────────────────────────────────────────────────────
 app.use(helmet());
 app.use(cors({
